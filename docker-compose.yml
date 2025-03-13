@@ -25,5 +25,16 @@ services:
     ports:
       - "3000:3000"
 
+  server:
+    image: ghcr.io/pentaledger/pentaledger-server:latest
+    container_name: pentaledger-server
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PENTALEDGER_DB_DSN: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/pentaledger?sslmode=disable
+    ports:
+      - "4000:4000"
+
 volumes:
   postgres_data:
